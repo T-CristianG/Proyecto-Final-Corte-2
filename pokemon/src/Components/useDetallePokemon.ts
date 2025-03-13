@@ -1,3 +1,5 @@
+// hola munda
+
 function useDetallePokemon(){
     return{
         <></>
