@@ -6,7 +6,7 @@ const Principal: React.FC = () => {
             style={{
               fontFamily: "Bangers", 
               color: '#FFEA00', // Color amarillo
-              textShadow: '5px 10px 4px rgba(0, 0, 255, 0.7)', // Sombra azul alrededor del texto
+              textShadow: '5px 10px 4px rgba(0, 0, 255, 0.7)',
               height: '25vh', 
               display: 'flex',
               fontSize: '10vw',
@@ -17,9 +17,9 @@ const Principal: React.FC = () => {
           <p>
             Qué mas ´pues 
           </p>
-      <img 
-        src=".\public\hero-img.png" 
-        alt="Pokédex Logo" 
+          <img className="object-contain md:object-cover"
+        src="/hero-img.png"
+        alt="Pokédex Logo"
       />
       </div>
     );

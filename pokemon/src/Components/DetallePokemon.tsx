@@ -3,15 +3,10 @@ import React from 'react';
 const PokemonCard: React.FC = () => {
   return (
     <div className="bg-white min-h-screen flex items-center justify-end p-4">
-      {/* Card Container */}
       <div className="card-container animate-float">
-        {/* Pokemon Card */}
         <div className="card w-72 sm:w-80 rounded-xl overflow-hidden">
-          {/* Glow Effect */}
           <div className="glow-effect"></div>
-          {/* Rainbow Border */}
           <div className="rainbow-border"></div>
-          {/* Card Frame */}
           <div className="relative bg-gradient-to-br from-orange-400 via-amber-500 to-rose-500 p-3 rounded-xl">
             {/* Shine Lines */}
             <div className="shine-lines"></div>

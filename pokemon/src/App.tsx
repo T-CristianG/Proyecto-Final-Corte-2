@@ -22,11 +22,17 @@ const App: React.FC = () => {
         <>
           <Principal />
           <button
-            onClick={handleIrAlBuscador}
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors mt-4"
-          >
-            Buscador de Pokémon
-          </button>
+          onClick={handleIrAlBuscador}
+          className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors mt-4"
+          style={{
+            fontFamily: "Bangers, cursive", // Fuente Bangers
+            color: '#FFEA00', // Color amarillo
+            textShadow: '5px 10px 4px rgba(0, 0, 255, 0.7)', // Sombra de texto
+            fontSize: '2rem', // Tamaño de fuente
+          }}
+        >
+          Inicio
+        </button>
         </>
       )}
 
