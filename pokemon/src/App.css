@@ -1,42 +1,128 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+@import "tailwindcss";
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.card-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 .card {
-  padding: 2em;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.read-the-docs {
-  color: #888;
+.card:hover {
+  transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+  filter: brightness(1.1);
+}
+
+.holo-effect {
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 10%,
+    rgba(255, 255, 255, 0.6) 45%,
+    rgba(255, 255, 255, 0.3) 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  mix-blend-mode: overlay;
+}
+
+.energy-symbol {
+  background: conic-gradient(from 0deg, #ff8a00, #e52e71, #ff8a00);
+  filter: blur(1px);
+}
+
+.card-shine {
+  background: linear-gradient(
+    125deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 25%,
+    transparent 50%
+  );
+}
+
+.sparkles::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 30%, white 0%, transparent 2%),
+    radial-gradient(circle at 80% 20%, white 0%, transparent 2%),
+    radial-gradient(circle at 40% 70%, white 0%, transparent 2%),
+    radial-gradient(circle at 70% 50%, white 0%, transparent 2%),
+    radial-gradient(circle at 60% 30%, white 0%, transparent 2%),
+    radial-gradient(circle at 30% 40%, white 0%, transparent 2%),
+    radial-gradient(circle at 90% 60%, white 0%, transparent 2%);
+  opacity: 0;
+  animation: sparkle 4s ease-in-out infinite;
+}
+
+.type-fire {
+  background: linear-gradient(45deg, #ff8a00, #e52e71);
+  animation: rainbow 6s linear infinite;
+}
+
+.rainbow-border {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #ff8a00, #e52e71, #ff8a00, #e52e71);
+  background-size: 200% 200%;
+  animation: shine 4s linear infinite;
+  border-radius: 1rem;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .rainbow-border {
+  opacity: 1;
+}
+
+.glow-effect {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle at center, rgba(255, 138, 0, 0.3), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .glow-effect {
+  opacity: 1;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.shine-lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.1) 10px,
+    rgba(255, 255, 255, 0.1) 20px
+  );
+  animation: tilt-shine 1.5s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .shine-lines {
+  opacity: 1;
+}
+
+.pokemon-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 10;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(255, 138, 0, 0.3));
+}
+
+.card:hover .pokemon-image {
+  transform: scale(1.1) translateZ(20px);
+  filter: drop-shadow(0 0 20px rgba(255, 138, 0, 0.5));
 }

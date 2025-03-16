@@ -1,1 +1,0 @@
-algo salio bien?

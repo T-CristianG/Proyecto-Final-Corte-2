@@ -1,38 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import DetallePokemon from './Components/DetallePokemon';
+import './index.css';
 
+const App: React.FC = () => {
+  const [mostrarDetalle, setMostrarDetalle] = useState(false);
 
-
-function App() {
-  const [count, setCount] = useState(0)
+  const toggleDetalle = () => {
+    setMostrarDetalle(!mostrarDetalle);
+  };
 
   return (
-    <>
-      <div>
-        
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      {/* Botón para mostrar/ocultar detalles */}
+      <button
+        onClick={toggleDetalle}
+        className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
+      >
+        {mostrarDetalle ? 'Ocultar Detalles' : 'Mostrar Detalles'}
+      </button>
 
-export default App
+      {/* Mostrar el componente DetallePokemon si mostrarDetalle es true */}
+      {mostrarDetalle && <DetallePokemon />}
+    </div>
+  );
+};
+
+export default App;
