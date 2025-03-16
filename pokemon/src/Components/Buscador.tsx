@@ -1,29 +1,21 @@
 import React from 'react';
-import DetallePokemon from './DetallePokemon';
+import { Link } from 'react-router-dom';
 
-interface BuscadorProps {
-  setMostrarDetalle: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Buscador: React.FC<BuscadorProps> = ({ setMostrarDetalle }) => {
-  const handleMostrarDetalle = () => {
-    setMostrarDetalle(true); // Mostrar DetallePokemon
-  };
-
+const Buscador: React.FC = () => {
   return (
     <div>
       <h2>Buscador de Pokémon</h2>
-      <button
-        onClick={handleMostrarDetalle}
+      {/* Link de React Router para navegar a la página de DetallePokemon */}
+      <Link
+        to="/detalle"  // Ruta para la página DetallePokemon
         className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors mt-4"
       >
         Ver Detalles
-      </button>
+      </Link>
     </div>
   );
 };
 
 export default Buscador;
-
 
 

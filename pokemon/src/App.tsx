@@ -1,57 +1,23 @@
-import React, { useState } from 'react';
-import Buscador from './Components/Buscador'; 
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Principal from './Components/Principal'; 
-import DetallePokemon from './Components/DetallePokemon'; // Asegúrate de importar DetallePokemon correctamente
+import Buscador from './Components/Buscador'; 
+import DetallePokemon from './Components/DetallePokemon'; 
 import './index.css';
 
 const App: React.FC = () => {
-  const [mostrarPrincipal, setMostrarPrincipal] = useState(true);  // Mostrar principal
-  const [mostrarBuscador, setMostrarBuscador] = useState(false);
-  const [mostrarDetalle, setMostrarDetalle] = useState(false);
-
-  // Esta función cambia a la página de Buscador
-  const handleIrAlBuscador = () => {
-    setMostrarPrincipal(false);  // Ocultar la página principal
-    setMostrarBuscador(true);  // Mostrar el Buscador
-  };
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full">
-      {/* Si se debe mostrar la página de Inicio */}
-      {mostrarPrincipal && (
-        <>
-          <Principal />
-          <button
-          onClick={handleIrAlBuscador}
-          className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors mt-4"
-          style={{
-            fontFamily: "Bangers, cursive", // Fuente Bangers
-            color: '#FFEA00', // Color amarillo
-            textShadow: '5px 10px 4px rgba(0, 0, 255, 0.7)', // Sombra de texto
-            fontSize: '2rem', // Tamaño de fuente
-          }}
-        >
-          Inicio
-        </button>
-        </>
-      )}
-
-      {/* Si se debe mostrar la página del Buscador */}
-      {mostrarBuscador && (
-        <>
-          <Buscador setMostrarDetalle={setMostrarDetalle} />
-          {mostrarDetalle && (
-            <div>
-              <DetallePokemon />
-            </div>
-          )}
-        </>
-      )}
-    </div>
+    <Router>
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full">
+        <Routes>
+          <Route path="/" element={<Principal />} />
+          <Route path="/buscador" element={<Buscador />} />
+          <Route path="/detalle" element={<DetallePokemon />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
 export default App;
-
-
 
