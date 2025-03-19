@@ -13,8 +13,16 @@ const Buscador: React.FC = () => {
           fontSize: '1.5vw',
         }}
       >
-        <h2 className="text-4xl font-bold sm:text-3xl md:text-4xl lg:text-5xl mb-4">
-          BUSCAR POKÉMON
+        <h2 
+          className="text-4xl font-bold sm:text-3xl md:text-4xl lg:text-5xl"
+          style={{
+            fontFamily: "Bangers", 
+            color: '#FFEA00', // Color amarillo
+            textShadow: '5px 10px 4px rgba(0, 0, 255, 0.7)', // Sombra azul alrededor del texto
+            marginBottom: '20px', 
+          }}
+        >
+          BUSCADOR DE POKÉMON
         </h2>
         <div className="flex items-center">
           <input
@@ -42,17 +50,6 @@ const Buscador: React.FC = () => {
 
       {/* Contenido principal */}
       <div className="flex flex-col items-center justify-center flex-grow">
-        <h2 
-          className="text-4xl font-bold sm:text-3xl md:text-4xl lg:text-5xl"
-          style={{
-            fontFamily: "Bangers", 
-            color: '#FFEA00', // Color amarillo
-            textShadow: '5px 10px 4px rgba(0, 0, 255, 0.7)', // Sombra azul alrededor del texto
-            marginBottom: '20px', 
-          }}
-        >
-          BUSCADOR DE POKÉMON
-        </h2>
         {/* Link de React Router para navegar a la página de DetallePokemon */}
         <Link
           to="/detalle"  // Ruta para la página DetallePokemon
