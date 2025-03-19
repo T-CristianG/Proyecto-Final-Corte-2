@@ -9,7 +9,7 @@ import './index.css';
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full">
+      <div>
         <Routes>
           <Route path="/" element={<Principal />} />
           <Route path="/buscador" element={<Buscador />} />
