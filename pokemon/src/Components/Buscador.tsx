@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DetallePokemon from './DetallePokemon'; // Importa el componente DetallePokemon
 
 const Buscador: React.FC = () => {
   return (
@@ -50,19 +51,8 @@ const Buscador: React.FC = () => {
 
       {/* Contenido principal */}
       <div className="flex flex-col items-center justify-center flex-grow">
-        {/* Link de React Router para navegar a la página de DetallePokemon */}
-        <Link
-          to="/detalle"  // Ruta para la página DetallePokemon
-          className="bg-blue-100 px-6 py-2 rounded-lg shadow-md hover:bg-yellow-200 transition-colors"
-          style={{
-            fontFamily: "Bangers", 
-            color: 'rgba(0, 0, 255, 0.7)',
-            fontSize: '1.5vw',
-            textDecoration: 'none', // Elimina el subrayado del enlace
-          }}
-        >
-          VER DETALLES
-        </Link>
+        {/* Renderiza el componente DetallePokemon directamente */}
+        <DetallePokemon />
       </div>
     </div>
   );
