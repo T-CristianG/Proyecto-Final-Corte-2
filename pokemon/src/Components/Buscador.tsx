@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Buscador: React.FC = () => {
+  
   return (
     <div>
       <h2>Buscador de Pokémon</h2>

@@ -1,31 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-//import './App.css' (esta en comentario por error que genera)
-
 
 function Plantilla_poke() {
-    
-    const [pokemones, setPokemones] = useState([])//estado de los pokemones-->arreglo vacio
+  const [pokemones, setPokemones] = useState([]); // Estado inicial->arreglo vacío
 
-    useEffect(() => {
-        const getPokemones = async () => {
-            //Se recupera el listado de los pokemones
-            const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0')
-            const ListaPokemones = await response.json()
-        
-            console.log(ListaPokemones)
-        }
+  useEffect(() => {
+    const getPokemones = async () => {
+      // Se recupera el listado de los pokemones
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0');
+      const ListaPokemones = await response.json();
+      setPokemones(ListaPokemones.results); // Actualiza el estado con los pokemones
+    };
 
-        getPokemones()
-    }, [])// se ejecuta la primera vez
+    getPokemones(); // Llama la función al montarse el componente
+  }, []); // Dependencia vacía para que se ejecute solo una vez
 
-    return (
-        <div className="Plantillas">
-            <h1>Pokédex</h1>
-        </div>
-    )
+  return (      
+    <div className="Plantillas">
+      <h1>Pokédex</h1>
+    </div>
+  );
 }
 
-export default Plantilla_poke
-
+export default Plantilla_poke;
