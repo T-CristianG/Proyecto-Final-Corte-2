@@ -55,8 +55,6 @@ const Buscador: React.FC = () => {
         <PokemonCard /> {/* Tarjeta 2 */}
         <PokemonCard /> {/* Tarjeta 3 */}
       </div>
-
-      {/* Botón para redirigir a Plantilla_poke */}
       <div className="flex justify-center p-4">
         <Link
           to="/plantilla"  // Ruta para Plantilla_poke
