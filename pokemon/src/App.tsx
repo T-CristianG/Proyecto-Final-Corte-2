@@ -9,7 +9,7 @@ import './index.css';
 const App: React.FC = () => {
   return (
     <Router>
-      <div>
+      <div className="min-h-screen w-full"> {/* Asegura que ocupe toda la pantalla */}
         <Routes>
           <Route path="/" element={<Principal />} />
           <Route path="/buscador" element={<Buscador />} />
