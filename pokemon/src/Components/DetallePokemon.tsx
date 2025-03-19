@@ -2,7 +2,7 @@ import React from 'react';
 
 const PokemonCard: React.FC = () => {
   return (
-    <div className="bg-white min-h-screen flex items-center justify-end p-4">
+    <div className="bg-blue-300 min-h-screen flex items-center justify-end p-4">
       <div className="card-container animate-float">
         <div className="card w-72 sm:w-80 rounded-xl overflow-hidden">
           <div className="glow-effect"></div>
