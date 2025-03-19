@@ -2,9 +2,9 @@ import React from 'react';
 
 const PokemonCard: React.FC = () => {
   return (
-    <div className="bg-blue-300 min-h-screen flex items-center justify-end p-4">
+    <div className="bg-blue-300 flex items-center justify-center p-4"> {/* Cambiado para centrar */}
       <div className="card-container animate-float">
-        <div className="card w-72 sm:w-80 rounded-xl overflow-hidden">
+        <div className="card w-64 sm:w-72 rounded-xl overflow-hidden"> {/* Reducido el tamaño */}
           <div className="glow-effect"></div>
           <div className="rainbow-border"></div>
           <div className="relative bg-gradient-to-br from-orange-400 via-amber-500 to-rose-500 p-3 rounded-xl">
@@ -26,7 +26,7 @@ const PokemonCard: React.FC = () => {
               <div className="absolute inset-0 card-shine"></div>
               <div className="absolute inset-0 sparkles"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-48 h-48 energy-symbol rounded-full animate-energy-spin opacity-20"></div>
+                <div className="w-40 h-40 energy-symbol rounded-full animate-energy-spin opacity-20"></div> {/* Reducido el tamaño */}
               </div>
               {/* Charizard Image */}
               <img

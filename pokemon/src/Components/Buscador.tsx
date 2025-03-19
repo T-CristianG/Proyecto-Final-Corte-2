@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import DetallePokemon from './DetallePokemon'; // Importa el componente DetallePokemon
+import PokemonCard from './DetallePokemon'; // Importa el componente PokemonCard
 
 const Buscador: React.FC = () => {
   return (
@@ -50,9 +49,11 @@ const Buscador: React.FC = () => {
       </div>
 
       {/* Contenido principal */}
-      <div className="flex flex-col items-center justify-center flex-grow">
-        {/* Renderiza el componente DetallePokemon directamente */}
-        <DetallePokemon />
+      <div className="flex-grow flex flex-wrap justify-center p-4 gap-4"> {/* Contenedor flexible */}
+        <PokemonCard /> {/* Tarjeta 1 */}
+        <PokemonCard /> {/* Tarjeta 2 */}
+        <PokemonCard /> {/* Tarjeta 3 */}
+        {/* Agrega más tarjetas según sea necesario */}
       </div>
     </div>
   );
