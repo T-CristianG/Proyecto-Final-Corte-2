@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PokemonCard from './DetallePokemon'; // Importa el componente PokemonCard
 
 const Buscador: React.FC = () => {
@@ -53,7 +54,16 @@ const Buscador: React.FC = () => {
         <PokemonCard /> {/* Tarjeta 1 */}
         <PokemonCard /> {/* Tarjeta 2 */}
         <PokemonCard /> {/* Tarjeta 3 */}
-        {/* Agrega más tarjetas según sea necesario */}
+      </div>
+
+      {/* Botón para redirigir a Plantilla_poke */}
+      <div className="flex justify-center p-4">
+        <Link
+          to="/plantilla"  // Ruta para Plantilla_poke
+          className="bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition-colors"
+        >
+          Ir a Plantilla
+        </Link>
       </div>
     </div>
   );
