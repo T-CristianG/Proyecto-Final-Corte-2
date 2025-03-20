@@ -48,8 +48,8 @@ const PokemonCard: React.FC = () => {
               <div className="space-y-2">
                 <div className="flex items-start gap-2">
                   <div className="flex gap-1">
-                    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-orange-400 to-red-500 animate-pulse-glow"></div>
-                    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-orange-400 to-red-500 animate-pulse-glow"></div>
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-blue-500 animate-pulse-glow"></div>
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-blue-500 animate-pulse-glow"></div>
                   </div>
                   <div>
                     <h3 className="font-bold text-sm">Fire Spin</h3>

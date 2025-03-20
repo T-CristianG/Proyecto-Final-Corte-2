@@ -8,6 +8,8 @@ interface Pokemon {
 
 const PlantillaPoke: React.FC = () => {
   const [pokemones, setPokemones] = useState<Pokemon[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getPokemones = async () => {
@@ -16,7 +18,7 @@ const PlantillaPoke: React.FC = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "*/*",
+            Accept: "application/json",
           },
           body: JSON.stringify({
             query: `
@@ -33,7 +35,16 @@ const PlantillaPoke: React.FC = () => {
           }),
         });
 
+        if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.statusText}`);
+        }
+
         const data = await response.json();
+
+        // Verifica si la respuesta contiene datos válidos
+        if (!data.data || !data.data.pokemon_v2_pokemon) {
+          throw new Error("Datos de la API no válidos");
+        }
 
         // Transformar los datos para extraer nombre e imagen
         const pokemonesConImagen: Pokemon[] = data.data.pokemon_v2_pokemon.map((pokemon: any) => {
@@ -62,11 +73,22 @@ const PlantillaPoke: React.FC = () => {
         setPokemones(pokemonesConImagen);
       } catch (error) {
         console.error("Error al obtener los pokemones:", error);
+        setError("Error al cargar los datos de Pokémon");
+      } finally {
+        setLoading(false);
       }
     };
 
     getPokemones();
   }, []);
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="Plantillas">
