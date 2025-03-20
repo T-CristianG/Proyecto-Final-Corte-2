@@ -148,16 +148,6 @@ const Buscador: React.FC = () => {
           </div>
         ))}
       </div>
-
-      {/* Enlace a la plantilla */}
-      <div className="flex justify-center p-4">
-        <Link
-          to="/plantilla"
-          className="bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition-colors"
-        >
-          Ir a Plantilla
-        </Link>
-      </div>
     </div>
   );
 };
