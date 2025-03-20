@@ -7,7 +7,7 @@ const PokemonCard: React.FC = () => {
         <div className="card w-64 sm:w-72 rounded-xl overflow-hidden"> {/* Reducido el tamaño */}
           <div className="glow-effect"></div>
           <div className="rainbow-border"></div>
-          <div className="relative bg-gradient-to-br from-[#FFEA00] via-[#1E90FF] via-[#FFEA00] to-[#1E90FF] p-3 rounded-xl">
+          <div className="relative bg-gradient-to-br from-[#FFEA00] via-[#FFEA00] to-[#FFEA00] p-3 rounded-xl">
             {/* Shine Lines */}
             <div className="shine-lines"></div>
             {/* Header */}
