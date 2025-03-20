@@ -7,6 +7,7 @@ interface Pokemon {
   image: string;
   shinyImage: string;
   stats: { baseStat: number; statName: string }[];
+  types: string[];
 }
 
 const PlantillaPoke: React.FC = () => {
@@ -39,6 +40,11 @@ const PlantillaPoke: React.FC = () => {
                       name
                     }
                   }
+                  types: pokemon_v2_pokemontypes {
+                    type: pokemon_v2_type {
+                      name
+                    }
+                  }
                 }
               }
             `,
@@ -55,13 +61,11 @@ const PlantillaPoke: React.FC = () => {
 
         const data = await response.json();
 
-        // Verifica si la respuesta contiene datos válidos
         if (!data.data || !data.data.pokemon) {
           throw new Error("Datos de la API no válidos");
         }
 
-        // Transformar los datos para extraer nombre, imagen y estadísticas
-        const pokemonesConImagen: Pokemon[] = data.data.pokemon.map((pokemon: any) => {
+        const pokemonesConDatos: Pokemon[] = data.data.pokemon.map((pokemon: any) => {
           const frontSprite = pokemon.sprites[0]?.front || "https://via.placeholder.com/96";
           const shinySprite = pokemon.sprites[0]?.shiny || "https://via.placeholder.com/96";
 
@@ -70,16 +74,19 @@ const PlantillaPoke: React.FC = () => {
             statName: stat.stat.name,
           }));
 
+          const types = pokemon.types.map((type: any) => type.type.name);
+
           return {
             id: pokemon.id,
             name: pokemon.name,
             image: frontSprite,
             shinyImage: shinySprite,
             stats,
+            types,
           };
         });
 
-        setPokemones(pokemonesConImagen);
+        setPokemones(pokemonesConDatos);
       } catch (error) {
         console.error("Error al obtener los pokemones:", error);
         setError("Error al cargar los datos de Pokémon");
@@ -108,6 +115,7 @@ const PlantillaPoke: React.FC = () => {
             <p>{pokemon.name}</p>
             <img src={pokemon.image} alt={pokemon.name} style={{ width: "96px" }} />
             <img src={pokemon.shinyImage} alt={`${pokemon.name} shiny`} style={{ width: "96px" }} />
+            <p>Tipos: {pokemon.types.join(", ")}</p>
             <ul>
               {pokemon.stats.map((stat, index) => (
                 <li key={index}>
