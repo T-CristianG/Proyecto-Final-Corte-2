@@ -137,3 +137,44 @@
   transform: scale(1.1) translateZ(20px);
   filter: drop-shadow(0 0 20px rgba(255, 138, 0, 0.5));
 }
+
+.pokedex-container {
+  text-align: center;
+  background-color: #121212;
+  min-height: 100vh;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  padding-top: 20px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.pokemon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pokemon-card {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  width: 200px;
+}
+
+.pokemon-image {
+  width: 100%;
+  height: auto;
+}
+
+.pokemon-name {
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  margin-top: 10px;
+}

@@ -36,10 +36,13 @@ const PlantillaPoke: React.FC = () => {
         const data = await response.json();
 
         // Transformar los datos para extraer nombre e imagen
-        const pokemonesConImagen = data.data.pokemon_v2_pokemon.map((pokemon: any) => {
+        const pokemonesConImagen: Pokemon[] = data.data.pokemon_v2_pokemon.map((pokemon: any) => {
           let spriteUrl = "https://via.placeholder.com/96"; // Imagen por defecto
 
-          if (pokemon.pokemon_v2_pokemonsprites.length > 0) {
+          if (
+            pokemon.pokemon_v2_pokemonsprites.length > 0 &&
+            pokemon.pokemon_v2_pokemonsprites[0].sprites
+          ) {
             try {
               const spritesJSON = JSON.parse(pokemon.pokemon_v2_pokemonsprites[0].sprites);
               if (spritesJSON.front_default) {
