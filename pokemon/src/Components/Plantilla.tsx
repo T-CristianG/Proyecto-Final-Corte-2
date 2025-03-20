@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 
 interface Pokemon {
+  id: number;
   name: string;
   image: string;
+  shinyImage: string;
+  stats: { baseStat: number; statName: string }[];
 }
 
 const PlantillaPoke: React.FC = () => {
@@ -22,16 +25,27 @@ const PlantillaPoke: React.FC = () => {
           },
           body: JSON.stringify({
             query: `
-              query getPokemons {
-                pokemon_v2_pokemon(limit: 20, offset: 0) {
-                  name
+              query PokemonList($limit: Int, $offset: Int) {
+                pokemon: pokemon_v2_pokemon(limit: $limit, offset: $offset) {
                   id
-                  pokemon_v2_pokemonsprites {
-                    sprites
+                  name
+                  sprites: pokemon_v2_pokemonsprites {
+                    front: sprites(path: "front_default")
+                    shiny: sprites(path: "front_shiny")
+                  }
+                  stats: pokemon_v2_pokemonstats {
+                    baseStat: base_stat
+                    stat: pokemon_v2_stat {
+                      name
+                    }
                   }
                 }
               }
             `,
+            variables: {
+              limit: 20,
+              offset: 1,
+            },
           }),
         });
 
@@ -42,31 +56,26 @@ const PlantillaPoke: React.FC = () => {
         const data = await response.json();
 
         // Verifica si la respuesta contiene datos válidos
-        if (!data.data || !data.data.pokemon_v2_pokemon) {
+        if (!data.data || !data.data.pokemon) {
           throw new Error("Datos de la API no válidos");
         }
 
-        // Transformar los datos para extraer nombre e imagen
-        const pokemonesConImagen: Pokemon[] = data.data.pokemon_v2_pokemon.map((pokemon: any) => {
-          let spriteUrl = "https://via.placeholder.com/96"; // Imagen por defecto
+        // Transformar los datos para extraer nombre, imagen y estadísticas
+        const pokemonesConImagen: Pokemon[] = data.data.pokemon.map((pokemon: any) => {
+          const frontSprite = pokemon.sprites[0]?.front || "https://via.placeholder.com/96";
+          const shinySprite = pokemon.sprites[0]?.shiny || "https://via.placeholder.com/96";
 
-          if (
-            pokemon.pokemon_v2_pokemonsprites.length > 0 &&
-            pokemon.pokemon_v2_pokemonsprites[0].sprites
-          ) {
-            try {
-              const spritesJSON = JSON.parse(pokemon.pokemon_v2_pokemonsprites[0].sprites);
-              if (spritesJSON.front_default) {
-                spriteUrl = spritesJSON.front_default;
-              }
-            } catch (error) {
-              console.error("Error al parsear JSON de sprites:", error);
-            }
-          }
+          const stats = pokemon.stats.map((stat: any) => ({
+            baseStat: stat.baseStat,
+            statName: stat.stat.name,
+          }));
 
           return {
+            id: pokemon.id,
             name: pokemon.name,
-            image: spriteUrl,
+            image: frontSprite,
+            shinyImage: shinySprite,
+            stats,
           };
         });
 
@@ -94,10 +103,18 @@ const PlantillaPoke: React.FC = () => {
     <div className="Plantillas">
       <h1>Pokédex</h1>
       <ul>
-        {pokemones.map((pokemon, index) => (
-          <li key={index}>
+        {pokemones.map((pokemon) => (
+          <li key={pokemon.id}>
             <p>{pokemon.name}</p>
             <img src={pokemon.image} alt={pokemon.name} style={{ width: "96px" }} />
+            <img src={pokemon.shinyImage} alt={`${pokemon.name} shiny`} style={{ width: "96px" }} />
+            <ul>
+              {pokemon.stats.map((stat, index) => (
+                <li key={index}>
+                  {stat.statName}: {stat.baseStat}
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>
