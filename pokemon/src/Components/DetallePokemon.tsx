@@ -12,10 +12,10 @@ const PokemonCard: React.FC = () => {
             <div className="shine-lines"></div>
             {/* Header */}
             <div className="flex justify-between items-start mb-2">
-              <h2 className="text-lg font-bold text-white">Charizard</h2>
+              <h2 className="text-lg font-bold text-black">Charizard</h2>
               <div className="flex items-center gap-1">
-                <span className="text-white font-bold">HP</span>
-                <span className="text-white font-bold">120</span>
+                <span className="text-black font-bold">HP</span>
+                <span className="text-black font-bold">120</span>
               </div>
             </div>
 
@@ -40,7 +40,7 @@ const PokemonCard: React.FC = () => {
             <div className="bg-white/90 backdrop-blur rounded-lg p-3 space-y-3">
               {/* Type */}
               <div className="flex items-center gap-2">
-                <span className="type-fire text-white text-xs px-2 py-1 rounded-full">Fire</span>
+                <span className="type-fire text-black text-xs px-2 py-1 rounded-full">Fire</span>
                 <span className="text-xs text-neutral-600">Stage 2</span>
               </div>
 
@@ -79,7 +79,7 @@ const PokemonCard: React.FC = () => {
             </div>
 
             {/* Card Footer */}
-            <div className="mt-3 text-[10px] text-white/80 text-center italic">
+            <div className="mt-3 text-[10px] text-black/80 text-center italic">
               Hecho por Cristian
             </div>
           </div>
