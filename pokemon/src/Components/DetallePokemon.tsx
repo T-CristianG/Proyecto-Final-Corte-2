@@ -78,7 +78,7 @@ const DetallePokemon: React.FC = () => {
             })),
           });
           setLoading(false);
-        }, 1000); // 2 segundos de espera
+        }, 2000); // 2 segundos de espera
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
         setLoading(false);
@@ -112,6 +112,9 @@ const DetallePokemon: React.FC = () => {
       </div>
     );
   }
+
+  // Encontrar la estadística de HP (salud)
+  const hpStat = pokemon.stats.find(stat => stat.statName === "hp")?.baseStat || 100;
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 w-full">
@@ -170,10 +173,32 @@ const DetallePokemon: React.FC = () => {
             </div>
             <div className="mt-4">
               <h3 className="text-lg font-bold text-red-800">Stats</h3>
+              {/* Barra de salud */}
+              <div className="health-bar mt-2">
+                <div className="flex justify-between">
+                  <span className="text-sm font-semibold">HP</span>
+                  <span className="text-sm font-bold">{hpStat}</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div
+                    className="bg-red-600 h-2.5 rounded-full"
+                    style={{ width: `${(hpStat / 255) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+              {/* Otras estadísticas */}
               {pokemon.stats.map((stat, index) => (
-                <div key={index} className="flex justify-between">
-                  <span className="text-sm font-semibold">{stat.statName}</span>
-                  <span className="text-sm font-bold">{stat.baseStat}</span>
+                <div key={index} className="mt-2">
+                  <div className="flex justify-between">
+                    <span className="text-sm font-semibold">{stat.statName}</span>
+                    <span className="text-sm font-bold">{stat.baseStat}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                    <div
+                      className="bg-blue-600 h-2.5 rounded-full"
+                      style={{ width: `${(stat.baseStat / 255) * 100}%` }}
+                    ></div>
+                  </div>
                 </div>
               ))}
             </div>
