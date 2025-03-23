@@ -12,7 +12,7 @@ interface Pokemon {
 
 const Buscador: React.FC = () => {
   const [pokemones, setPokemones] = useState<Pokemon[]>([]);
-  const [search, setSearch] = useState(""); // Controla el texto del buscador
+  const [search, setSearch] = useState("");
   const [filteredPokemones, setFilteredPokemones] = useState<Pokemon[]>([]);
 
   useEffect(() => {
@@ -98,55 +98,74 @@ const Buscador: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-blue-300 w-full">
+    <div className="min-h-screen flex flex-col bg-gray-100 w-full">
       {/* Menú superior */}
-      <div 
-        className="w-full bg-blue-100 py-4 flex flex-col items-center justify-center shadow-md"
-        style={{
-          fontFamily: "Bangers", 
-          color: 'rgba(0, 0, 255, 0.7)',
-          fontSize: '1.5vw',
-        }}
-      >
-        <h2 
-          className="text-4xl font-bold sm:text-3xl md:text-4xl lg:text-5xl"
-          style={{
-            fontFamily: "Bangers", 
-            color: '#FFEA00',
-            textShadow: '5px 10px 4px rgba(0, 0, 255, 0.7)',
-            marginBottom: '20px', 
-          }}
-        >
-          BUSCADOR DE POKÉMON
-        </h2>
-        <div className="flex items-center">
+      <div className="w-full bg-red-600 py-6 flex flex-col items-center justify-center shadow-lg">
+        <div className="logo mb-4">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2000px-International_Pok%C3%A9mon_logo.svg.png"
+            alt="Pokémon Logo"
+            className="w-48"
+          />
+        </div>
+        <div className="searchPokemon flex items-center">
           <input
             type="text"
             value={search}
-            onChange={handleSearch} // Filtra mientras escribes
-            placeholder="ESCRIBE EL NOMBRE DE TU POKÉMON."
-            className="px-4 py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-200"
-            style={{
-              fontFamily: "Bangers", 
-              fontSize: '1.2vw',
-              width: '300px',
-            }}
+            onChange={handleSearch}
+            placeholder="Search Pokemon"
+            className="px-4 py-2 bg-transparent border-b-2 border-red-800 text-white placeholder-red-300 focus:outline-none focus:border-white transition-colors duration-300"
           />
+          <button className="button-search ml-4 bg-white border-2 border-red-800 text-red-800 px-4 py-2 rounded-full flex items-center hover:bg-red-800 hover:text-white transition-colors duration-300">
+            <span className="mr-2">Search</span>
+            <img
+              src="http://www.purarteadesivos.com.br/wp-content/uploads/2017/04/Pok%C3%A9mon-go.png"
+              alt="Pokéball"
+              className="w-6 h-6"
+            />
+          </button>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="flex-grow flex flex-wrap justify-center p-4 gap-4">
-        {filteredPokemones.map((pokemon) => (
-          <div
-            key={pokemon.id}
-            className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center w-64"
-          >
-            <p className="font-bold text-lg">{pokemon.name}</p>
-            <img src={pokemon.image} alt={pokemon.name} style={{ width: "96px" }} />
-            <p>Tipos: {pokemon.types.join(", ")}</p>
-          </div>
-        ))}
+      <div className="content-main flex-grow p-8">
+        <div className="pokemons flex flex-wrap justify-center gap-6">
+          {filteredPokemones.map((pokemon) => (
+            <Link
+              key={pokemon.id}
+              to={`/pokemon/${pokemon.id}`}
+              className="pokemon bg-white border border-gray-200 rounded-lg p-4 flex items-center w-full max-w-md hover:border-red-600 transition-colors duration-300"
+            >
+              <img
+                src={pokemon.image}
+                alt={pokemon.name}
+                className="w-24 h-24"
+              />
+              <div className="pokemon-details ml-4">
+                <h2 className="text-2xl font-bold text-red-800">{pokemon.name}</h2>
+                <h3 className="species-title text-gray-600">Species</h3>
+                <div className="species flex gap-2 mt-2">
+                  {pokemon.types.map((type, index) => (
+                    <span
+                      key={index}
+                      className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        type === "fire"
+                          ? "bg-red-500 text-white"
+                          : type === "water"
+                          ? "bg-blue-500 text-white"
+                          : type === "grass"
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-500 text-white"
+                      }`}
+                    >
+                      {type}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
