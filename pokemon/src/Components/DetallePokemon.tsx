@@ -1,10 +1,96 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-const PokemonCard: React.FC = () => {
+interface Pokemon {
+  id: number;
+  name: string;
+  image: string;
+  height: number;
+  weight: number;
+  types: string[];
+  stats: { baseStat: number; statName: string }[];
+}
+
+const DetallePokemon: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPokemonData = async () => {
+      try {
+        const response = await fetch("https://beta.pokeapi.co/graphql/v1beta", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            query: `
+              query PokemonDetail($id: Int!) {
+                pokemon: pokemon_v2_pokemon_by_pk(id: $id) {
+                  id
+                  name
+                  height
+                  weight
+                  sprites: pokemon_v2_pokemonsprites {
+                    front: sprites(path: "front_default")
+                  }
+                  types: pokemon_v2_pokemontypes {
+                    type: pokemon_v2_type {
+                      name
+                    }
+                  }
+                  stats: pokemon_v2_pokemonstats {
+                    baseStat: base_stat
+                    stat: pokemon_v2_stat {
+                      name
+                    }
+                  }
+                }
+              }
+            `,
+            variables: { id: parseInt(id || "1") },
+          }),
+        });
+
+        const { data } = await response.json();
+        const pokemonData = data.pokemon;
+
+        setPokemon({
+          id: pokemonData.id,
+          name: pokemonData.name,
+          image: pokemonData.sprites[0]?.front || "https://via.placeholder.com/96",
+          height: pokemonData.height,
+          weight: pokemonData.weight,
+          types: pokemonData.types.map((type: any) => type.type.name),
+          stats: pokemonData.stats.map((stat: any) => ({
+            baseStat: stat.baseStat,
+            statName: stat.stat.name,
+          })),
+        });
+      } catch (error) {
+        console.error("Error fetching Pokémon data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPokemonData();
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!pokemon) {
+    return <div>Pokémon not found.</div>;
+  }
+
   return (
-    <div className="bg-blue-300 flex items-center justify-center p-4"> {/* Cambiado para centrar */}
+    <div className="bg-blue-300 flex items-center justify-center p-4">
       <div className="card-container animate-float">
-        <div className="card w-64 sm:w-72 rounded-xl overflow-hidden"> {/* Reducido el tamaño */}
+        <div className="card w-64 sm:w-72 rounded-xl overflow-hidden">
           <div className="glow-effect"></div>
           <div className="rainbow-border"></div>
           <div className="relative bg-gradient-to-br from-[#FFEA00] via-[#FFEA00] to-[#FFEA00] p-3 rounded-xl">
@@ -12,10 +98,12 @@ const PokemonCard: React.FC = () => {
             <div className="shine-lines"></div>
             {/* Header */}
             <div className="flex justify-between items-start mb-2">
-              <h2 className="text-lg font-bold text-black">Charizard</h2>
+              <h2 className="text-lg font-bold text-black">{pokemon.name}</h2>
               <div className="flex items-center gap-1">
                 <span className="text-black font-bold">HP</span>
-                <span className="text-black font-bold">120</span>
+                <span className="text-black font-bold">
+                  {pokemon.stats.find((stat) => stat.statName === "hp")?.baseStat || "N/A"}
+                </span>
               </div>
             </div>
 
@@ -26,13 +114,13 @@ const PokemonCard: React.FC = () => {
               <div className="absolute inset-0 card-shine"></div>
               <div className="absolute inset-0 sparkles"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-40 h-40 energy-symbol rounded-full animate-energy-spin opacity-20"></div> {/* Reducido el tamaño */}
+                <div className="w-40 h-40 energy-symbol rounded-full animate-energy-spin opacity-20"></div>
               </div>
-              {/* Charizard Image */}
+              {/* Pokémon Image */}
               <img
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
-                alt="Charizard"
-                className="pokemon-image"
+                src={pokemon.image}
+                alt={pokemon.name}
+                className="pokemon-image w-full h-full object-cover"
               />
             </div>
 
@@ -40,41 +128,32 @@ const PokemonCard: React.FC = () => {
             <div className="bg-white/90 backdrop-blur rounded-lg p-3 space-y-3">
               {/* Type */}
               <div className="flex items-center gap-2">
-                <span className="type-fire text-black text-xs px-2 py-1 rounded-full">Fire</span>
-                <span className="text-xs text-neutral-600">Stage 2</span>
-              </div>
-
-              {/* Attacks */}
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <div className="flex gap-1">
-                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-blue-500 animate-pulse-glow"></div>
-                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-blue-500 animate-pulse-glow"></div>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-sm">Fire Spin</h3>
-                    <p className="text-xs text-neutral-600">
-                      Discard 2 Energy cards attached to Charizard in order to use this attack.
-                    </p>
-                  </div>
-                  <span className="font-bold ml-auto">100</span>
-                </div>
+                {pokemon.types.map((type, index) => (
+                  <span
+                    key={index}
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                      type === "fire"
+                        ? "bg-red-500 text-white"
+                        : type === "water"
+                        ? "bg-blue-500 text-white"
+                        : type === "grass"
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-500 text-white"
+                    }`}
+                  >
+                    {type}
+                  </span>
+                ))}
               </div>
 
               {/* Stats */}
-              <div className="flex items-center justify-between text-xs pt-2 border-t border-neutral-200">
-                <div>
-                  <span className="text-neutral-600">Weakness</span>
-                  <span className="ml-1 type-fire text-white px-2 py-0.5 rounded-full">Water</span>
-                </div>
-                <div>
-                  <span className="text-neutral-600">Resistance</span>
-                  <span className="ml-1 bg-neutral-200 px-2 py-0.5 rounded-full">-30</span>
-                </div>
-                <div>
-                  <span className="text-neutral-600">Retreat Cost</span>
-                  <span className="ml-1 bg-neutral-800 text-white px-2 py-0.5 rounded-full">3</span>
-                </div>
+              <div className="space-y-2">
+                {pokemon.stats.map((stat, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <span className="text-xs font-semibold">{stat.statName}</span>
+                    <span className="text-xs font-bold">{stat.baseStat}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -89,4 +168,4 @@ const PokemonCard: React.FC = () => {
   );
 };
 
-export default PokemonCard;
+export default DetallePokemon;

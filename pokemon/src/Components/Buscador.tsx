@@ -100,29 +100,33 @@ const Buscador: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 w-full">
       {/* Menú superior */}
-      <div className="w-full bg-red-600 py-6 flex flex-col items-center justify-center shadow-lg">
-        <div className="logo mb-4">
+      <div className="w-full bg-red-600 py-6 flex flex-col items-center justify-center shadow-lg relative">
+        {/* Imagen de Pokédex en el fondo */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+          <img
+            src="https://www.pngmart.com/files/12/Pokedex-PNG-Transparent-Picture.png"
+            alt="Pokédex"
+            className="w-64 h-64"
+          />
+        </div>
+
+        <div className="logo mb-4 z-10">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2000px-International_Pok%C3%A9mon_logo.svg.png"
             alt="Pokémon Logo"
             className="w-48"
           />
         </div>
-        <div className="searchPokemon flex items-center">
+        <div className="searchPokemon flex items-center z-10">
           <input
             type="text"
             value={search}
             onChange={handleSearch}
-            placeholder="Search Pokemon"
+            placeholder="Buscar Pokemon"
             className="px-4 py-2 bg-transparent border-b-2 border-red-800 text-white placeholder-red-300 focus:outline-none focus:border-white transition-colors duration-300"
           />
           <button className="button-search ml-4 bg-white border-2 border-red-800 text-red-800 px-4 py-2 rounded-full flex items-center hover:bg-red-800 hover:text-white transition-colors duration-300">
-            <span className="mr-2">Search</span>
-            <img
-              src="http://www.purarteadesivos.com.br/wp-content/uploads/2017/04/Pok%C3%A9mon-go.png"
-              alt="Pokéball"
-              className="w-6 h-6"
-            />
+            <span className="mr-2">Buscar</span>
           </button>
         </div>
       </div>
@@ -133,7 +137,7 @@ const Buscador: React.FC = () => {
           {filteredPokemones.map((pokemon) => (
             <Link
               key={pokemon.id}
-              to={`/pokemon/${pokemon.id}`}
+              to={`/pokemon/${pokemon.id}`} // Redirige a la ruta del Pokémon
               className="pokemon bg-white border border-gray-200 rounded-lg p-4 flex items-center w-full max-w-md hover:border-red-600 transition-colors duration-300"
             >
               <img
