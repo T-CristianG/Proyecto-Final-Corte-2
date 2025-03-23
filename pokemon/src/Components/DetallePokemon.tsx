@@ -15,6 +15,7 @@ const DetallePokemon: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
+  const [countdown, setCountdown] = useState(2); // Contador de 2 segundos
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -57,21 +58,29 @@ const DetallePokemon: React.FC = () => {
         const { data } = await response.json();
         const pokemonData = data.pokemon;
 
-        setPokemon({
-          id: pokemonData.id,
-          name: pokemonData.name,
-          image: pokemonData.sprites[0]?.front || "https://via.placeholder.com/96",
-          height: pokemonData.height,
-          weight: pokemonData.weight,
-          types: pokemonData.types.map((type: any) => type.type.name),
-          stats: pokemonData.stats.map((stat: any) => ({
-            baseStat: stat.baseStat,
-            statName: stat.stat.name,
-          })),
-        });
+        // Simulamos una espera de 2 segundos antes de mostrar los datos
+        const timer = setInterval(() => {
+          setCountdown((prev) => prev - 1);
+        }, 1000);
+
+        setTimeout(() => {
+          clearInterval(timer);
+          setPokemon({
+            id: pokemonData.id,
+            name: pokemonData.name,
+            image: pokemonData.sprites[0]?.front || "https://via.placeholder.com/96",
+            height: pokemonData.height,
+            weight: pokemonData.weight,
+            types: pokemonData.types.map((type: any) => type.type.name),
+            stats: pokemonData.stats.map((stat: any) => ({
+              baseStat: stat.baseStat,
+              statName: stat.stat.name,
+            })),
+          });
+          setLoading(false);
+        }, 1000); // 2 segundos de espera
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
-      } finally {
         setLoading(false);
       }
     };
@@ -80,11 +89,28 @@ const DetallePokemon: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <h1 className="text-4xl font-press-start text-red-600 animate-pulse">
+            Loading...
+          </h1>
+          <p className="text-2xl font-press-start text-gray-700 mt-4">
+            Tiempo restante: {countdown} segundos
+          </p>
+        </div>
+      </div>
+    );
   }
 
   if (!pokemon) {
-    return <div>Pokémon not found.</div>;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+        <h1 className="text-4xl font-press-start text-red-600">
+          Pokémon no encontrado
+        </h1>
+      </div>
+    );
   }
 
   return (
