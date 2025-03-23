@@ -88,78 +88,68 @@ const DetallePokemon: React.FC = () => {
   }
 
   return (
-    <div className="bg-blue-300 flex items-center justify-center p-4">
-      <div className="card-container animate-float">
-        <div className="card w-64 sm:w-72 rounded-xl overflow-hidden">
-          <div className="glow-effect"></div>
-          <div className="rainbow-border"></div>
-          <div className="relative bg-gradient-to-br from-[#FFEA00] via-[#FFEA00] to-[#FFEA00] p-3 rounded-xl">
-            {/* Shine Lines */}
-            <div className="shine-lines"></div>
-            {/* Header */}
-            <div className="flex justify-between items-start mb-2">
-              <h2 className="text-lg font-bold text-black">{pokemon.name}</h2>
-              <div className="flex items-center gap-1">
-                <span className="text-black font-bold">HP</span>
-                <span className="text-black font-bold">
-                  {pokemon.stats.find((stat) => stat.statName === "hp")?.baseStat || "N/A"}
+    <div className="min-h-screen flex flex-col bg-gray-100 w-full">
+      {/* Menú superior */}
+      <div className="w-full bg-red-600 py-6 flex flex-col items-center justify-center shadow-lg relative">
+        {/* Imagen de Pokédex en el fondo */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+          <img
+            src="https://www.pngmart.com/files/12/Pokedex-PNG-Transparent-Picture.png"
+            alt="Pokédex"
+            className="w-64 h-64"
+          />
+        </div>
+
+        <div className="logo mb-4 z-10">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2000px-International_Pok%C3%A9mon_logo.svg.png"
+            alt="Pokémon Logo"
+            className="w-48"
+          />
+        </div>
+      </div>
+
+      {/* Contenido principal */}
+      <div className="content-main flex-grow p-8">
+        <div className="pokemon bg-white border border-gray-200 rounded-lg p-4 flex items-center w-full max-w-md mx-auto hover:border-red-600 transition-colors duration-300">
+          <img
+            src={pokemon.image}
+            alt={pokemon.name}
+            className="w-24 h-24"
+          />
+          <div className="pokemon-details ml-4">
+            <h2 className="text-2xl font-bold text-red-800">{pokemon.name}</h2>
+            <h3 className="species-title text-gray-600">Species</h3>
+            <div className="species flex gap-2 mt-2">
+              {pokemon.types.map((type, index) => (
+                <span
+                  key={index}
+                  className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                    type === "fire"
+                      ? "bg-red-500 text-white"
+                      : type === "water"
+                      ? "bg-blue-500 text-white"
+                      : type === "grass"
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-500 text-white"
+                  }`}
+                >
+                  {type}
                 </span>
-              </div>
+              ))}
             </div>
-
-            {/* Card Image */}
-            <div className="relative aspect-square mb-3 rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-200 to-rose-200"></div>
-              <div className="absolute inset-0 holo-effect animate-holo-glow"></div>
-              <div className="absolute inset-0 card-shine"></div>
-              <div className="absolute inset-0 sparkles"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-40 h-40 energy-symbol rounded-full animate-energy-spin opacity-20"></div>
-              </div>
-              {/* Pokémon Image */}
-              <img
-                src={pokemon.image}
-                alt={pokemon.name}
-                className="pokemon-image w-full h-full object-cover"
-              />
+            <div className="mt-4">
+              <p><strong>Height:</strong> {pokemon.height}</p>
+              <p><strong>Weight:</strong> {pokemon.weight}</p>
             </div>
-
-            {/* Pokemon Info */}
-            <div className="bg-white/90 backdrop-blur rounded-lg p-3 space-y-3">
-              {/* Type */}
-              <div className="flex items-center gap-2">
-                {pokemon.types.map((type, index) => (
-                  <span
-                    key={index}
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      type === "fire"
-                        ? "bg-red-500 text-white"
-                        : type === "water"
-                        ? "bg-blue-500 text-white"
-                        : type === "grass"
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-500 text-white"
-                    }`}
-                  >
-                    {type}
-                  </span>
-                ))}
-              </div>
-
-              {/* Stats */}
-              <div className="space-y-2">
-                {pokemon.stats.map((stat, index) => (
-                  <div key={index} className="flex items-center justify-between">
-                    <span className="text-xs font-semibold">{stat.statName}</span>
-                    <span className="text-xs font-bold">{stat.baseStat}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Card Footer */}
-            <div className="mt-3 text-[10px] text-black/80 text-center italic">
-              Hecho por Cristian
+            <div className="mt-4">
+              <h3 className="text-lg font-bold text-red-800">Stats</h3>
+              {pokemon.stats.map((stat, index) => (
+                <div key={index} className="flex justify-between">
+                  <span className="text-sm font-semibold">{stat.statName}</span>
+                  <span className="text-sm font-bold">{stat.baseStat}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
