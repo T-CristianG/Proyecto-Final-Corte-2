@@ -168,18 +168,18 @@ const DetallePokemon: React.FC = () => {
               ))}
             </div>
             <div className="mt-4">
-              <p><strong>Height:</strong> {pokemon.height}</p>
-              <p><strong>Weight:</strong> {pokemon.weight}</p>
+              <p className="flex justify-between text-red-800"><strong>Height:</strong> {pokemon.height}</p>
+              <p className="flex justify-between text-red-800"><strong>Weight:</strong> {pokemon.weight}</p>
             </div>
             <div className="mt-4">
               <h3 className="text-lg font-bold text-red-800">Stats</h3>
               {/* Barra de salud */}
               <div className="health-bar mt-2">
-                <div className="flex justify-between">
-                  <span className="text-sm font-semibold">HP</span>
+                <div className="flex justify-between text-red-800"> 
+                  <span className="text-sm font-semibold ">HP</span>
                   <span className="text-sm font-bold">{hpStat}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="w-full text-red-800 rounded-full h-2.5">
                   <div
                     className="bg-red-600 h-2.5 rounded-full"
                     style={{ width: `${(hpStat / 255) * 100}%` }}
@@ -188,17 +188,18 @@ const DetallePokemon: React.FC = () => {
               </div>
               {/* Otras estadísticas */}
               {pokemon.stats.map((stat, index) => (
-                <div key={index} className="mt-2">
-                  <div className="flex justify-between">
+                <div key={index} className="mt-2 " >
+                  <div className="flex justify-between text-red-800">
                     <span className="text-sm font-semibold">{stat.statName}</span>
                     <span className="text-sm font-bold">{stat.baseStat}</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2.5">
                     <div
-                      className="bg-blue-600 h-2.5 rounded-full"
+                      className="bg-blue-900 h-2.5 rounded-full"
                       style={{ width: `${(stat.baseStat / 255) * 100}%` }}
                     ></div>
                   </div>
+
                 </div>
               ))}
             </div>
