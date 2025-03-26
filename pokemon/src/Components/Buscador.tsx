@@ -140,11 +140,6 @@ const Buscador: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 w-full">
       <div className="w-full bg-red-600 py-6 flex flex-col items-center justify-center shadow-lg relative">
         <div className="absolute inset-0 flex items-center justify-center opacity-20">
-          <img
-            src="https://www.pngmart.com/files/12/Pokedex-PNG-Transparent-Picture.png"
-            alt="Pokédex"
-            className="w-64 h-64"
-          />
         </div>
         <div className="logo mb-4 z-10">
           <img
