@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 interface Pokemon {
@@ -17,6 +17,7 @@ const Buscador: React.FC = () => {
   const [types, setTypes] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null); // Referencia al menú desplegable
 
   useEffect(() => {
     const getPokemones = async () => {
@@ -75,9 +76,8 @@ const Buscador: React.FC = () => {
         setPokemones(pokemonesConDatos);
         setFilteredPokemones(pokemonesConDatos);
 
-        // Extrae todos los tipos de Pokémon y elimina duplicados
         const allTypes = Array.from(new Set(pokemonesConDatos.flatMap((pokemon) => pokemon.types)));
-        setTypes(["ninguno", ...allTypes]); // Añade "ninguno" al principio
+        setTypes(["ninguno", ...allTypes]);
       } catch (error) {
         console.error("Error al obtener los pokemones:", error);
       }
@@ -86,11 +86,27 @@ const Buscador: React.FC = () => {
     getPokemones();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false); // Cierra el menú si el clic es fuera del dropdown
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toLowerCase();
     setSearch(value);
     const filtered = pokemones.filter((pokemon) =>
-      pokemon.name.toLowerCase().startsWith(value) // Cambiar includes por startsWith
+      pokemon.name.toLowerCase().startsWith(value)
     );
     setFilteredPokemones(filtered);
   };
@@ -122,7 +138,6 @@ const Buscador: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 w-full">
-      {/* Menú superior */}
       <div className="w-full bg-red-600 py-6 flex flex-col items-center justify-center shadow-lg relative">
         <div className="absolute inset-0 flex items-center justify-center opacity-20">
           <img
@@ -157,7 +172,7 @@ const Buscador: React.FC = () => {
               Filtrar por tipo
             </button>
             {isDropdownOpen && (
-              <div className="absolute bg-white border border-gray-300 rounded-lg mt-2 max-h-64 overflow-y-auto shadow-lg animate-fade-in p-2">
+              <div ref={dropdownRef} className="absolute bg-white border border-gray-300 rounded-lg mt-2 max-h-64 overflow-y-auto shadow-lg animate-fade-in p-2">
                 {types.map((type) => (
                   <label
                     key={type}
@@ -177,8 +192,6 @@ const Buscador: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Contenido principal */}
       <div className="content-main flex-grow p-8">
         <div className="pokemons flex flex-wrap justify-center gap-6">
           {filteredPokemones.map((pokemon) => (
