@@ -90,7 +90,7 @@ const Buscador: React.FC = () => {
     const value = event.target.value.toLowerCase();
     setSearch(value);
     const filtered = pokemones.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(value)
+      pokemon.name.toLowerCase().startsWith(value) // Cambiar includes por startsWith
     );
     setFilteredPokemones(filtered);
   };
